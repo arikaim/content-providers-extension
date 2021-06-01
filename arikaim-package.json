@@ -1,0 +1,20 @@
+{
+    "title": "Content Providers",
+    "name": "content",
+    "package-type": "extension",
+    "type": "system",
+    "description": "Content providers and content types registry details.",
+    "short-description": "Content providers.",
+    "version": "1.0.0",
+    "repository": "https://github.com/arikaim/content-providers-extension.git",
+    "position": "2",
+    "requires": {      
+    },
+    "admin-menu": {        
+        "title": "Content",
+        "icon": "code",
+        "page-title": "Content Providers",
+        "page-icon": "code",       
+        "component": "content::admin"
+    }
+}

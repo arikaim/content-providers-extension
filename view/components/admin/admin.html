@@ -1,0 +1,11 @@
+{% set items = [ 
+    { id: 'providers_button', title: labels.providers, component: 'content::admin.providers.view', icon: 'database', active: true },     
+    { id: 'types_button', title: labels.types, component: 'content::admin.types.view', icon: 'code' },       
+] %}
+
+{{  component('components:tabs',{ 
+        items: items,
+        menu: { extension: 'content' },
+        content: { component: 'content::admin.providers.view'} 
+    })
+}}
