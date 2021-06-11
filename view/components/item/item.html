@@ -1,0 +1,33 @@
+{% if content_type and content_id is not empty %}
+    {% set content_item = content().type(content_type).get(content_id) %}
+{% endif %}
+{% set fields = content_item.fields() %}
+{% if fields is not iterable %}
+<div class="ui message">
+    {{ message }}
+</div>
+{% endif %}
+<div class="{{ class }}">
+    <h4>
+        {{ content_item.getType.getTitle() }}
+    </h4>
+    <table class="ui table very basic definition {{ table_class }}">
+        <thead>
+            <tr>
+                <th class="two wide"></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for field in fields %}   
+                {% set value = field.getValue() %}
+                {% if (value is not empty) or (hide_empty != true and value is empty) %}
+                    <tr>
+                        <td class="right aligned">{{ field.getTitle() }}</td>
+                        <td>{{ field.getValue() }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>   
+</div>

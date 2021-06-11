@@ -12,9 +12,9 @@ namespace Arikaim\Extensions\Content\Classes;
 use Arikaim\Core\Content\Type\ContentType;
 
 /**
- * Text content type class
+ * Sms content type class
 */
-class TextContentType extends ContentType 
+class SmsContentType extends ContentType 
 {
     /**
      * Define text content type
@@ -23,10 +23,10 @@ class TextContentType extends ContentType
      */
     protected function define(): void
     {
-        $this->setName('text');
-        $this->setTitle('Text');
+        $this->setName('sms');
+        $this->setTitle('Sms message');
         // fields      
-        $this->addField('text','text.area','Text');     
-        $this->addField('title','text','Title');      
+        $this->addField('message','text.area','Message');     
+        $this->addField('phone','text','Phone');      
     }
 }
