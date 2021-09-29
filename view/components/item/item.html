@@ -7,15 +7,15 @@
     {{ message }}
 </div>
 {% endif %}
-<div class="{{ class }}">
-    <h4>
+<div {{ class|attr('class') }}>
+    <h4 {{ title_class|attr('class') }}>
         {{ content_item.getType.getTitle() }}
     </h4>
     <table class="ui table very basic definition {{ table_class }}">
         <thead>
             <tr>
-                <th class="two wide"></th>
-                <th></th>
+                <th class="four wide"></th>
+                <th></th>              
             </tr>
         </thead>
         <tbody>
@@ -23,8 +23,20 @@
                 {% set value = field.getValue() %}
                 {% if (value is not empty) or (hide_empty != true and value is empty) %}
                     <tr>
-                        <td class="right aligned">{{ field.getTitle() }}</td>
-                        <td>{{ field.getValue() }}</td>
+                        <td class="right aligned flex flex-rows items-center">
+                            <div class="px-1">
+                                {{  component('semantic~clipboard.copy',{ 
+                                        type: 'element',
+                                        focus_element: focus_element, 
+                                        selector: '#field_' ~ field.getName() 
+                                    }) 
+                                }}
+                            </div>      
+                            <div class="flex-grow self-end">
+                                {{ field.getTitle() }}
+                            </div>                                                 
+                        </td>
+                        <td id="field_{{ field.getName() }}">{{ field.getValue() }}</td>                      
                     </tr>
                 {% endif %}
             {% endfor %}

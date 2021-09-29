@@ -24,6 +24,9 @@ class Content extends Extension
     */
     public function install()
     {        
+        // Api
+        $this->addApiRoute('GET','/api/content/search/list/{data_field}/{selector}/[{query}]','ContentApi','searchList','session');  
+
         // Register db tables
         $this->createDbTable('TextContentSchema');
         $this->createDbTable('LinksContentSchema');
