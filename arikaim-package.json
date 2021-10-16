@@ -8,6 +8,7 @@
     "version": "1.0.3",
     "repository": "https://github.com/arikaim/content-providers-extension.git",
     "position": "2",
+    "install-order": 1,
     "requires": {      
     },
     "admin-menu": {        
