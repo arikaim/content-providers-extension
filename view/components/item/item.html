@@ -25,18 +25,20 @@
                     <tr>
                         <td class="right aligned flex flex-rows items-center">
                             <div class="px-1">
-                                {{  component('semantic~clipboard.copy',{ 
-                                        type: 'element',
-                                        focus_element: focus_element, 
-                                        selector: '#field_' ~ field.getName() 
-                                    }) 
-                                }}
+                                {% if value is not empty and hide_copy != true %}
+                                    {{  component('semantic~clipboard.copy',{ 
+                                            type: 'element',
+                                            focus_element: focus_element, 
+                                            selector: '#field_' ~ field.getName() 
+                                        }) 
+                                    }}
+                                {% endif %}
                             </div>      
                             <div class="flex-grow self-end">
                                 {{ field.getTitle() }}
                             </div>                                                 
                         </td>
-                        <td id="field_{{ field.getName() }}">{{ field.getValue() }}</td>                      
+                        <td id="field_{{ field.getName() }}">{{ value }}</td>                      
                     </tr>
                 {% endif %}
             {% endfor %}
