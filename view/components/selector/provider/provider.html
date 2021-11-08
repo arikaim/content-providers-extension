@@ -1,4 +1,4 @@
-{% set providers = service('content').getProviders(category,ttype) %}
+{% set providers = service('content').getProviders(category,type) %}
 <div class="ui dropdown content-provider-dropdown {{ class|default('basic button selection') }}" 
     id="{{ id|default('content_provider_dropdown') }}">
     <input name="{{ name|default('content_provider') }}" type="hidden" value="{{ selected }}">  
