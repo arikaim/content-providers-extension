@@ -2,15 +2,21 @@
     {% set content_item = content().type(content_type).get(content_id) %}
 {% endif %}
 {% set fields = content_item.fields() %}
+{% set exclude = exclude|default([]) %}
 {% if fields is not iterable %}
 <div class="ui message">
     {{ message }}
 </div>
 {% endif %}
 <div {{ class|attr('class') }}>
-    <h4 {{ title_class|attr('class') }}>
-        {{ content_item.getType.getTitle() }}
-    </h4>
+    {% if hide_title != true %}
+        {{  component('semantic~segment-title',{ 
+                icon: icon, 
+                title: content_item.getType.getTitle(),
+                close_button: close_button, 
+            }) 
+        }}      
+    {% endif %}
     <table class="ui table very basic definition {{ table_class }}">
         <thead>
             <tr>
@@ -22,6 +28,7 @@
             {% for field in fields %}   
                 {% set value = field.getValue() %}
                 {% if (value is not empty) or (hide_empty != true and value is empty) %}
+                    {% if field.getName() not in exclude %}
                     <tr>
                         <td class="right aligned flex flex-rows items-center">
                             <div class="px-1">
@@ -40,6 +47,7 @@
                         </td>
                         <td id="field_{{ field.getName() }}">{{ value }}</td>                      
                     </tr>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </tbody>
