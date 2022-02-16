@@ -36,7 +36,7 @@ class LinksContentSchema extends Schema
         $table->prototype('uuid');   
         $table->userId();
         $table->string('title')->nullable(true);
-        $table->string('url')->nullable(false);
+        $table->text('url')->nullable(false);
         $table->string('target')->nullable(true);        
         $table->text('options')->nullable(true);
         $table->dateCreated();
@@ -53,6 +53,9 @@ class LinksContentSchema extends Schema
      * @return void
      */
     public function update($table) 
-    {              
+    {       
+        if ($this->getColumnType('url') != 'text') {
+            $table->text('url')->nullable(true)->change();       
+        }
     }
 }

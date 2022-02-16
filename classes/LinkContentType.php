@@ -27,7 +27,7 @@ class LinkContentType extends ContentType
         $this->setTitle('Link');
         // fields
         $this->addField('title','text','Title');
-        $this->addField('url','text','Url');
+        $this->addField('url','text.area','Url');
         $this->addField('target','text','Target');
         $this->addField('options','list','Link Options');      
     }
