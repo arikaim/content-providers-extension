@@ -41,8 +41,7 @@ class LinksContentSchema extends Schema
         $table->text('options')->nullable(true);
         $table->dateCreated();
         $table->dateUpdated();
-        // indexes   
-        $table->index('url');  
+        // indexes         
         $table->index('title');          
     }
 
@@ -55,6 +54,10 @@ class LinksContentSchema extends Schema
     public function update($table) 
     {       
         if ($this->getColumnType('url') != 'text') {
+            if ($this->hasIndex('links_content_url_index') == true) {
+                $table->dropIndex('links_content_url_index');
+            }
+           
             $table->text('url')->nullable(true)->change();       
         }
     }
