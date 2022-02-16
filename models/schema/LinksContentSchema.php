@@ -54,10 +54,7 @@ class LinksContentSchema extends Schema
     public function update($table) 
     {       
         if ($this->getColumnType('url') != 'text') {
-            if ($this->hasIndex('links_content_url_index') == true) {
-                $table->dropIndex('links_content_url_index');
-            }
-           
+            $this->dropIndex('links_content_url_index');
             $table->text('url')->nullable(true)->change();       
         }
     }

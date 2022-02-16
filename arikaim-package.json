@@ -5,7 +5,7 @@
     "type": "system",
     "description": "Content providers and content types registry details.",
     "short-description": "Content providers.",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "repository": "https://github.com/arikaim/content-providers-extension.git",
     "position": "2",
     "install-order": 1,
