@@ -45,7 +45,10 @@
                                 {{ field.getTitle() }}
                             </div>                                                 
                         </td>
-                        <td id="field_{{ field.getName() }}">{{ value }}</td>                      
+                        <td 
+                            style="word-break: break-all;" 
+                            class="break-all"
+                            id="field_{{ field.getName() }}">{{ value }}</td>                      
                     </tr>
                     {% endif %}
                 {% endif %}
