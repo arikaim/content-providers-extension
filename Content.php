@@ -30,6 +30,7 @@ class Content extends Extension
         // Register db tables
         $this->createDbTable('TextContentSchema');
         $this->createDbTable('LinksContentSchema');
+        $this->createDbTable('SmsContentSchema');
 
         // Register system content types
         $this->registerContentType('Classes\\TextContentType');
@@ -39,5 +40,6 @@ class Content extends Extension
         // Register content prviders
         $this->registerContentProvider(Model::TextContent('content'));
         $this->registerContentProvider(Model::LinksContent('content'));
+        $this->registerContentProvider(Model::SmsContent('content'));
     }   
 }

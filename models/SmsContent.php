@@ -15,18 +15,20 @@ use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
 use Arikaim\Core\Db\Traits\UserRelation;
 use Arikaim\Core\Db\Traits\DateCreated;
+use Arikaim\Core\Db\Traits\DateUpdated;
 use Arikaim\Core\Content\Traits\ContentProvider;
 
 use Arikaim\Core\Interfaces\Content\ContentProviderInterface;
 
 /**
- * Text content db model class
+ * SMS content db model class
  */
-class TextContent extends Model implements ContentProviderInterface
+class SmsContent extends Model implements ContentProviderInterface
 {
     use Uuid,     
         Find, 
         DateCreated,  
+        DateUpdated,
         ContentProvider,      
         UserRelation;
     
@@ -35,7 +37,7 @@ class TextContent extends Model implements ContentProviderInterface
      *
      * @var string
      */
-    protected $table = 'text_content';
+    protected $table = 'sms_content';
 
     /**
      * Fillable attributes
@@ -43,9 +45,10 @@ class TextContent extends Model implements ContentProviderInterface
      * @var array
      */
     protected $fillable = [
-        'title', 
-        'text',
+        'phone', 
+        'message',
         'user_id',  
+        'date_updated',
         'date_created'         
     ];
     
@@ -61,21 +64,21 @@ class TextContent extends Model implements ContentProviderInterface
      *
      * @var array
      */
-    protected $supportedContentTypes = ['text'];
+    protected $supportedContentTypes = ['sms'];
 
     /**
      * Provider name
      *
      * @var string
      */
-    protected $contentProviderName  = 'text.content';
+    protected $contentProviderName  = 'sms.content';
     
     /**
      * Content provider title
      *
      * @var string
      */
-    protected $contentProviderTitle  = 'Text';
+    protected $contentProviderTitle  = 'SMS message';
 
     /**
      * Get content
@@ -90,8 +93,8 @@ class TextContent extends Model implements ContentProviderInterface
         $model = $this->findById($key);
        
         return ($model == null) ? null : [
-            'text'  => $model->text,
-            'title' => $model->title
+            'message' => $model->message,
+            'phone'   => $model->phone
         ];
     }
 
@@ -114,15 +117,16 @@ class TextContent extends Model implements ContentProviderInterface
      */
     public function createItem(array $data, ?string $contentType = null): ?array
     {
-        $text = $data['text'] ?? null;
-        if (empty($text) == true) {
+        $message = $data['message'] ?? '';
+        $phone = $data['phone'] ?? '';
+        if (empty($message) == true || empty($phone) == true) {
             return null;
         }
 
         $model = $this->create([
-            'text'    => $text,
+            'message' => $message,
             'user_id' => $data['user_id'] ?? null,
-            'title'   => $data['title'] ?? null
+            'phone'   => $phone
         ]);
 
         return ($model == null) ? null : [$model->uuid,$this->getProviderName()];
@@ -138,11 +142,17 @@ class TextContent extends Model implements ContentProviderInterface
      */
     public function saveItem($key, array $data, ?string $contentType = null): bool
     {
+        $message = $data['message'] ?? '';
+        $phone = $data['phone'] ?? '';
+        if (empty($message) == true || empty($phone) == true) {
+            return false;
+        }
+
         $model = $this->findById($key);
       
         return ($model == null) ? false : (bool)$model->update([
-            'text'  => $data['text'] ?? null,
-            'title' => $data['title'] ?? null
+            'message' => $message,
+            'phone'   => $phone
         ]);       
     }
 }

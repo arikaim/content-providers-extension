@@ -38,14 +38,6 @@ class LinksContent extends Model implements ContentProviderInterface
     protected $table = 'links_content';
 
     /**
-     * Append custom attributes
-     *
-     * @var array
-     */
-    protected $appends = [           
-    ];
-
-    /**
      * Fillable attributes
      *
      * @var array
@@ -98,11 +90,8 @@ class LinksContent extends Model implements ContentProviderInterface
     public function getContent($key, ?string $contentType = null, $keyFields = null): ?array
     {
         $model = $this->findById($key);
-        if (\is_object($model) == false) {
-            return null;
-        }
        
-        return [
+        return ($model == null) ? null : [
             'url'     => $model->url,
             'target'  => $model->target,
             'options' => [],
@@ -141,11 +130,7 @@ class LinksContent extends Model implements ContentProviderInterface
             'title'   => $data['title'] ?? null
         ]);
 
-        if (\is_object($model) == false) {
-            return null;
-        }
-
-        return [$model->uuid,$this->getProviderName()];
+        return ($model == null) ? null : [$model->uuid,$this->getProviderName()];
     }
 
     /**
@@ -159,7 +144,7 @@ class LinksContent extends Model implements ContentProviderInterface
     public function saveItem($key, array $data, ?string $contentType = null): bool
     {
         $model = $this->findById($key);
-        if (\is_object($model) == false) {
+        if ($model == null) {
             return false;
         }
         $url = $data['url'] ?? null;
