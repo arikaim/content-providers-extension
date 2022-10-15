@@ -55,7 +55,7 @@ class ContentApi extends ApiController
             $model = Model::Users()->getNotDeletedQuery();
             $model = $model->where('user_name','like','%' . $search . '%')->take($size)->get();
           
-            $this->setResponse(\is_object($model),function() use($model,$dataField) {     
+            $this->setResponse(($model != null),function() use($model,$dataField) {     
                 $items = [];
                 foreach ($model as $item) {
                     $items[] = ['name' => $item['user_name'],'value' => $item[$dataField]];

@@ -1,3 +1,6 @@
 {
-    "message": "Content item not valid."
+    "message": "Content item not valid.",
+    "labels": {
+        "id": "Id"
+    }
 }

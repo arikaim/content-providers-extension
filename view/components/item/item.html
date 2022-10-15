@@ -25,6 +25,16 @@
             </tr>
         </thead>
         <tbody>
+            {% if hide_id != true %}
+            <tr>
+                <td class="right aligned">{{ labels.id }}</td>
+                <td>
+                    <div class="ui basic label">
+                        {{ content_item.getId() }}
+                    </div>
+                </td>
+            </tr>
+            {% endif %}
             {% for field in fields %}   
                 {% set value = field.getValue() %}
                 {% if (value is not empty) or (hide_empty != true and value is empty) %}
