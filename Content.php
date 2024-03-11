@@ -24,9 +24,6 @@ class Content extends Extension
     */
     public function install()
     {        
-        // Api
-        $this->addApiRoute('GET','/api/content/search/list/{data_field}/{selector}/[{query}]','ContentApi','searchList','session');  
-
         // Register db tables
         $this->createDbTable('TextContentSchema');
         $this->createDbTable('LinksContentSchema');
@@ -41,5 +38,8 @@ class Content extends Extension
         $this->registerContentProvider(Model::TextContent('content'));
         $this->registerContentProvider(Model::LinksContent('content'));
         $this->registerContentProvider(Model::SmsContent('content'));
+        // Console Commands
+        $this->registerConsoleCommand('ModelExportCommand');   
+        $this->registerConsoleCommand('ModelImportCommand');   
     }   
 }
