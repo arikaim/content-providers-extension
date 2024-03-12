@@ -60,7 +60,6 @@ class ModelImport extends Action
         $schemaClass = $item['schema_class'] ?? $modelClass;
         $unique = $item['unique'] ?? [];
         $extension = $item['extension'] ?? null; 
-        $id = $item['uuid'] ?? null;
         $data = $item['data'];
 
         $schema = Factory::createSchema($schemaClass,$extension);
@@ -98,13 +97,19 @@ class ModelImport extends Action
         $uniqueQuery = $this->createSearchValues($unique,$modelData); 
          
         if ($model->where($uniqueQuery)->exists() == true) {
-            $model = $model->where($uniqueQuery)->first();
-            $result = $model->update($modelData);
-            if ($result === false) {
-                $this->error('Error update model');
+            if ($update == true) {
+                $model = $model->where($uniqueQuery)->first();
+                $result = $model->update($modelData);
+                if ($result === false) {
+                    $this->error('Error update model');
+                } else {
+                    $this->result('message','Updated model: ' . $model->uuid);
+                }
             } else {
-                $this->result('message','Updated model: ' . $model->uuid);
+                $model = $model->where($uniqueQuery)->first();
+                $this->error('Model exist' . $model->uuid);
             }
+          
         } else {            
             $new = $model->create($modelData);
             if ($new === null) {

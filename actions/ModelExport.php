@@ -55,7 +55,7 @@ class ModelExport extends Action
         }
 
         $schema = Factory::createSchema($schemaClass,$extension);
-        if ($model == null) {
+        if ($schema == null) {
             throw new Exception("Not valid schema class or extension name!",1);
         }
 
@@ -66,7 +66,16 @@ class ModelExport extends Action
 
         $fileName = $this->getFileName($model);
         $data = $model->toArray();
-    
+        $relations = $model->relationsToArray();
+        $relationNames = $this->getRelationNames($model);
+      
+        // remove relations data 
+        foreach ($data as $key => $value) {
+            if (\in_array($key,$relationNames) == true) {
+                unset($data[$key]);
+            }
+        }
+
         $content = [
             'date_exported' => DateTime::toString(DateTime::ISO8601_FORMAT),
             'model_class'   => $modelClass,
@@ -74,7 +83,8 @@ class ModelExport extends Action
             'extension'     => $extension,
             'uuid'          => $model->uuid,
             'unique'        => ['uuid'],
-            'data'          => $data
+            'data'          => $data,
+            'relations'     => $relations
         ];
 
         $result = $this->saveToFile($fileName,$content);
@@ -85,6 +95,17 @@ class ModelExport extends Action
         }
 
         return $result;
+    }
+
+    /**
+     * Get relations names
+     *
+     * @param object $model
+     * @return array
+     */
+    public function getRelationNames($model): array
+    {
+        return \array_keys($model->getRelations());            
     }
 
     /**
