@@ -1,5 +1,6 @@
 {  
     "labels": {       
+        "content": "Content",  
         "providers": "Providers",  
         "types": "Content Types"              
     }  

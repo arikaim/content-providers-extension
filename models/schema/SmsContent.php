@@ -12,16 +12,16 @@ namespace Arikaim\Extensions\Content\Models\Schema;
 use Arikaim\Core\Db\Schema;
 
 /**
- * Link content database table schema definition.
+ * Sms content database table schema definition.
  */
-class LinksContentSchema extends Schema  
+class SmsContent extends Schema  
 {    
     /**
      * Table name
      *
      * @var string
      */
-    protected $tableName = 'links_content';
+    protected $tableName = 'sms_content';
 
     /**
      * Create table
@@ -35,14 +35,12 @@ class LinksContentSchema extends Schema
         $table->id();
         $table->prototype('uuid');   
         $table->userId();
-        $table->string('title')->nullable(true);
-        $table->text('url')->nullable(false);
-        $table->string('target')->nullable(true);        
-        $table->text('options')->nullable(true);
+        $table->string('phone')->nullable(false);
+        $table->text('message')->nullable(false);
         $table->dateCreated();
         $table->dateUpdated();
-        // indexes         
-        $table->index('title');          
+        // indexes   
+        $table->index('phone');          
     }
 
     /**
@@ -52,10 +50,6 @@ class LinksContentSchema extends Schema
      * @return void
      */
     public function update($table) 
-    {       
-        if ($this->getColumnType('url') != 'text') {
-            $this->dropIndex('links_content_url_index');
-            $table->text('url')->nullable(true)->change();       
-        }
+    {              
     }
 }

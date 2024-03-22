@@ -12,16 +12,16 @@ namespace Arikaim\Extensions\Content\Models\Schema;
 use Arikaim\Core\Db\Schema;
 
 /**
- * Text content database table schema definition.
+ * Link content database table schema definition.
  */
-class TextContentSchema extends Schema  
+class LinksContent extends Schema  
 {    
     /**
      * Table name
      *
      * @var string
      */
-    protected $tableName = 'text_content';
+    protected $tableName = 'links_content';
 
     /**
      * Create table
@@ -36,10 +36,12 @@ class TextContentSchema extends Schema
         $table->prototype('uuid');   
         $table->userId();
         $table->string('title')->nullable(true);
-        $table->text('text')->nullable(false);
+        $table->text('url')->nullable(false);
+        $table->string('target')->nullable(true);        
+        $table->text('options')->nullable(true);
         $table->dateCreated();
         $table->dateUpdated();
-        // indexes   
+        // indexes         
         $table->index('title');          
     }
 
@@ -50,6 +52,10 @@ class TextContentSchema extends Schema
      * @return void
      */
     public function update($table) 
-    {              
+    {       
+        if ($this->getColumnType('url') != 'text') {
+            $this->dropIndex('links_content_url_index');
+            $table->text('url')->nullable(true)->change();       
+        }
     }
 }
