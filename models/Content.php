@@ -39,6 +39,7 @@ class Content extends Model
     protected $fillable = [
         'status', 
         'key',
+        'title',
         'content_type',
         'content_id',
         'user_id'
@@ -50,6 +51,16 @@ class Content extends Model
      * @var boolean
      */
     public $timestamps = false;
-   
+    
+    public function findByKey(string $key, int $userId): ?object
+    {
+        return $this->findByKeyQuery($key,$userId)->first();
+    }
 
+    public function scopeFindByKeyQuery($query, string $key, int $userId)
+    {
+        return $query
+            ->where('key','=',\trim($key))
+            ->where('user_id','=',$userId);
+    }
 }

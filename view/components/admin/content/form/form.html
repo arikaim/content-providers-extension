@@ -1,0 +1,20 @@
+{% if uuid is not empty %}
+    {% set content = createModel('content','content').findById(uuid) %}
+{% endif %}
+<form class="ui equal width form" id="content_form">  
+    <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">     
+    <div class="two fields">
+        <div class="field">
+            <label>{{ fields.key.label }}</label>
+            <input rule="minLength[2]" type="text" name="key" id="key" {{ fields.code.placeholder|attr('placeholder') }} value="{{ content.code }}"> 
+        </div>    
+        <div class="field">
+            <label>{{ fields.type.label }}</label>
+        </div>  
+    </div>    
+    <div class="field">
+        <label>{{ fields.title.label }}</label>
+        <input type="text" name="title" id="title" {{ fields.title.placeholder|attr('placeholder') }} value="{{ content.title }}">  
+    </div>
+    {{ component('semantic~form.footer') }}   
+</form>

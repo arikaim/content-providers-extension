@@ -37,6 +37,7 @@ class Content extends Schema
         $table->userId();
         $table->status();
         $table->string('key')->nullable(false);
+        $table->string('title')->nullable(true);
         $table->string('content_type')->nullable(false); 
         $table->bigInteger('content_id')->unsigned()->nullable(false); 
         // indexes         
@@ -51,5 +52,8 @@ class Content extends Schema
      */
     public function update($table) 
     {       
+        if ($this->hasColumn('title') == false) {
+            $table->string('title')->nullable(true);
+        }
     }
 }

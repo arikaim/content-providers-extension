@@ -24,12 +24,15 @@ class Content extends Extension
     */
     public function install()
     {        
+        // Api
+        $this->addApiRoute('PUT','/api/content/update','ContentApi','update','session');        
+        $this->addApiRoute('DELETE','/api/content/delete/{uuid}','ContentApi','delete','session');     
+        $this->addApiRoute('PUT','/api/content/status','ContentApi','setStatus','session'); 
         // Register db tables
         $this->createDbTable('Content');
         $this->createDbTable('TextContent');
         $this->createDbTable('LinksContent');
         $this->createDbTable('SmsContent');
-
         // Register system content types
         $this->registerContentType('Classes\\TextContentType');
         $this->registerContentType('Classes\\EmailContentType');

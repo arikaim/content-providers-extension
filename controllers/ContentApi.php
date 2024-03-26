@@ -25,4 +25,31 @@ class ContentApi extends ApiController
     {
         $this->loadMessages('content>content.messages');
     }
+
+    /**
+     * Save content item
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return Psr\Http\Message\ResponseInterface
+    */
+    public function update($request, $response, $data) 
+    {       
+        $data
+            ->addRule('text:min=2','key')         
+            ->addRule('text:min=2','content_type')             
+            ->validate(true);     
+
+        $key = $data->get('key');  
+        $contentType = $data->get('content_type');  
+        $userId = $this->getUserId(); 
+
+        $content = Model::Content('content');   
+                                                                  
+        $this
+            ->message('add')
+            ->field('key',$content->key)              
+            ->field('uuid',$content->uuid);             
+    }
 }

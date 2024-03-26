@@ -1,0 +1,36 @@
+
+{% set content = createModel('content','content').orderBy('id') %}
+{% set items = paginate(content,'content') %}
+{% set items = items.getItems() %}
+{% for item in items %}
+<tr id="{{ item.uuid }}">        
+    <td>
+        <button 
+            title="{{ labels.details }}"
+            mountTo="details_content"
+            component="content::admin.content.details"
+            class="ui icon mini compact basic button content-action" 
+            params="uuid:{{ item.uuid }}">
+            <i class="icon info"></i>
+        </button>
+        <button class="ui icon mini compact basic button edit-content" uuid="{{ item.uuid }}">
+            <i class="icon edit"></i>
+        </button>
+        <button class="ui icon basic mini compact button delete-content" uuid="{{ item.uuid }}" data-title="{{ item.title }}">
+            <i class="icon trash orange"></i>
+        </button>                     
+    </td>
+    <td>
+        {{ component('semantic~status.dropdown',{ status: item.status, uuid: item.uuid, skip: [2,3,4,5] }) }} 
+    </td>
+    <td>
+        {{ item.slug }}
+    </td>
+    <td>
+        {{ item.type }}
+    </td>
+    <td>
+        {{ item.user.user_name_or_email }}
+    </td>            
+</tr>
+{% endfor %}
