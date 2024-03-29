@@ -25,6 +25,7 @@ class Content extends Extension
     public function install()
     {        
         // Api
+        $this->addApiRoute('POST','/api/content/add','ContentApi','add','session');        
         $this->addApiRoute('PUT','/api/content/update','ContentApi','update','session');        
         $this->addApiRoute('DELETE','/api/content/delete/{uuid}','ContentApi','delete','session');     
         $this->addApiRoute('PUT','/api/content/status','ContentApi','setStatus','session'); 

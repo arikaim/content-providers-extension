@@ -10,11 +10,15 @@
         </div>    
         <div class="field">
             <label>{{ fields.type.label }}</label>
+            {{ component('content::admin.types.dropdown',{}) }}
         </div>  
     </div>    
-    <div class="field">
-        <label>{{ fields.title.label }}</label>
-        <input type="text" name="title" id="title" {{ fields.title.placeholder|attr('placeholder') }} value="{{ content.title }}">  
+    <div class="two fields">
+        <div class="field">
+            <label>{{ fields.title.label }}</label>
+            <input type="text" name="title" id="title" {{ fields.title.placeholder|attr('placeholder') }} value="{{ content.title }}">  
+        </div>
+        <div class="field"></div>
     </div>
     {{ component('semantic~form.footer') }}   
 </form>

@@ -52,11 +52,38 @@ class Content extends Model
      */
     public $timestamps = false;
     
+    /**
+     * Find content by key
+     *
+     * @param string  $key
+     * @param integer $userId
+     * @return object|null
+     */
     public function findByKey(string $key, int $userId): ?object
     {
         return $this->findByKeyQuery($key,$userId)->first();
     }
 
+    /**
+     * Return true if content item exist
+     *
+     * @param string  $key
+     * @param integer $userId
+     * @return boolean
+     */
+    public function hasContentItem(string $key, int $userId): bool
+    {
+        return ($this->findByKey($key,$userId) !== null);
+    }
+
+    /**
+     * Find by key query
+     *
+     * @param Builder  $query
+     * @param string  $key
+     * @param integer $userId
+     * @return Builder
+     */
     public function scopeFindByKeyQuery($query, string $key, int $userId)
     {
         return $query

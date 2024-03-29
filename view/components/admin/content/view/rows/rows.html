@@ -1,7 +1,12 @@
 
-{% set content = createModel('content','content').orderBy('id') %}
+{% set content = createModel('Content','content').orderBy('id') %}
 {% set items = paginate(content,'content') %}
 {% set items = items.getItems() %}
+{% if items|length == 0 %}
+    <tr>
+        <td colspan="5">...</td>
+    </tr>
+{% endif %}
 {% for item in items %}
 <tr id="{{ item.uuid }}">        
     <td>
