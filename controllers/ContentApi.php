@@ -43,7 +43,7 @@ class ContentApi extends ApiController
             ->validate(true); 
             
         $key = $data->get('key');  
-        $contentType = $data->get('content_type'); 
+        $contentType = \trim($data->get('content_type')); 
         $title = $data->get('title');   
         $userId = $this->getUserId(); 
 
@@ -74,7 +74,7 @@ class ContentApi extends ApiController
             'user_id'      => $userId,
             'title'        => $title,
             'content_type' => $contentType,
-            'content_id'   => $contyentItem->uuid
+            'content_id'   => $contyentItem[0]
         ]);
 
         if ($item == null) {

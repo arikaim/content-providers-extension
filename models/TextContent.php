@@ -114,13 +114,8 @@ class TextContent extends Model implements ContentProviderInterface
      */
     public function createItem(array $data, ?string $contentType = null): ?array
     {
-        $text = $data['text'] ?? null;
-        if (empty($text) == true) {
-            return null;
-        }
-
         $model = $this->create([
-            'text'    => $text,
+            'text'    => $data['text'] ?? '',
             'user_id' => $data['user_id'] ?? null,
             'title'   => $data['title'] ?? null
         ]);

@@ -36,7 +36,7 @@ class TextContent extends Schema
         $table->prototype('uuid');   
         $table->userId();
         $table->string('title')->nullable(true);
-        $table->text('text')->nullable(false);
+        $table->text('text')->nullable(true);
         $table->dateCreated();
         $table->dateUpdated();
         // indexes   
