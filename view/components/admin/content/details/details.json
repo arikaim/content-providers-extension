@@ -1,12 +1,12 @@
 {
-    "title": "content Details",
+    "title": "Content Details",
     "icon": "info",
     "labels": {        
         "id": "Id",          
-        "slug": "Slug",           
+        "key": "key",           
         "title": "Title",             
-        "code": "Code",
-        "status": "Status",   
-        "rate": "Exchange Rate"      
+        "type": "Type",
+        "status": "Status",
+        "item_id": "Item Id"
     }
 }

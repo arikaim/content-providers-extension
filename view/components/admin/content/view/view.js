@@ -38,7 +38,7 @@ function contentView() {
                 title: self.getMessage('remove.title'),
                 description: message
             },function() {
-                content.delete(uuid,function(result) {
+                contentApi.delete(uuid,function(result) {
                     $('#' + uuid).remove();                
                 });
             });
@@ -56,7 +56,6 @@ function contentView() {
         }); 
 
         contentView.initRows();
-
         arikaim.ui.loadComponentButton('.create-content');
     };
 }

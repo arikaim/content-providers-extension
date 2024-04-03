@@ -1,5 +1,5 @@
 {% if uuid is not empty %}
-    {% set content = createModel('content','content').findById(uuid) %}  
+    {% set content = createModel('Content','content').findById(uuid) %}  
 {% endif %}
 {% component 'semantic~panel' %}
 <div>
@@ -31,28 +31,27 @@
                 <td>
                     {{ content.title }}
                 </td>
-            </tr>
+            </tr>           
             <tr>
                 <td class="right aligned">
-                    {{ labels.code }}
+                    {{ labels.type }}
                 </td>
                 <td>
                     <div class="ui basic label">
-                        {{ content.code }}
+                        {{ content.content_type }}
                     </div>
                 </td>
-            </tr>    
-            {% if content.getExchangeRate() is not empty %}
+            </tr>      
             <tr>
-                <td class="right aligned">{{ labels.rate }}</td>
-                <td>
-                    <div class="ui basic mini label">USD</div>    
-                    <span>
-                        {{ content.getExchangeRate() }}
-                    </span>                                       
+                <td class="right aligned">
+                    {{ labels.item_id }}
                 </td>
-            </tr>    
-            {% endif %}              
+                <td>
+                    <div class="ui basic label">
+                        {{ content.content_id }}
+                    </div>
+                </td>
+            </tr>      
         </tbody>  
     </table>     
 </div>

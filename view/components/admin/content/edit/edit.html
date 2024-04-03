@@ -1,5 +1,14 @@
+{% if uuid is not empty %}
+    {% set content = createModel('Content','content').findById(uuid) %}
+{% endif %}
+
 {% component 'semantic~panel' %}  
-    <div class="mt-1">        
-       edit 
-    </div>   
+    <div class="mt-1" id="content_editor">
+        <h4>
+            {{ labels.item }}
+        </h4>
+        <div class="ui basic label">
+            {{ content.key }}
+        </div>
+    </div> 
 {% endcomponent %}

@@ -1,4 +1,7 @@
 {
     "title": "Edit Content Item",
-    "icon": "edit"                
+    "icon": "edit",
+    "labels": {
+        "item": "Item"
+    }                
 }

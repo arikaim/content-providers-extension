@@ -12,16 +12,23 @@
     <td>
         <button 
             title="{{ labels.details }}"
-            mountTo="details_content"
+            mountTo="content_details"
             component="content::admin.content.details"
             class="ui icon mini compact basic button content-action" 
             params="uuid:{{ item.uuid }}">
             <i class="icon info"></i>
         </button>
-        <button class="ui icon mini compact basic button edit-content" uuid="{{ item.uuid }}">
+        <button 
+            title="{{ labels.edit }}"
+            class="ui icon mini compact basic button edit-content" 
+            uuid="{{ item.uuid }}">
             <i class="icon edit"></i>
         </button>
-        <button class="ui icon basic mini compact button delete-content" uuid="{{ item.uuid }}" data-title="{{ item.title }}">
+        <button 
+            title="{{ labels.delete }}"
+            class="ui icon basic mini compact button delete-content" 
+            uuid="{{ item.uuid }}" 
+            data-title="{{ item.title }}">
             <i class="icon trash orange"></i>
         </button>                     
     </td>
@@ -29,10 +36,10 @@
         {{ component('semantic~status.dropdown',{ status: item.status, uuid: item.uuid, skip: [2,3,4,5] }) }} 
     </td>
     <td>
-        {{ item.slug }}
+        {{ item.key }}
     </td>
     <td>
-        {{ item.type }}
+        {{ item.content_type }}
     </td>
     <td>
         {{ item.user.user_name_or_email }}

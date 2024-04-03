@@ -39,7 +39,7 @@ class Content extends Schema
         $table->string('key')->nullable(false);
         $table->string('title')->nullable(true);
         $table->string('content_type')->nullable(false); 
-        $table->bigInteger('content_id')->unsigned()->nullable(false); 
+        $table->string('content_id')->nullable(false); 
         // indexes         
         $table->unique(['key','user_id']);          
     }
