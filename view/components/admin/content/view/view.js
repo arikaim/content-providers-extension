@@ -25,7 +25,7 @@ function contentView() {
         $('.status-dropdown').dropdown({
             onChange: function(value) {
                 var uuid = $(this).attr('uuid');
-                content.setStatus(uuid,value);               
+                contentApi.setStatus(uuid,value);               
             }
         });
 

@@ -14,13 +14,15 @@ use Illuminate\Database\Eloquent\Model;
 use Arikaim\Core\Db\Traits\Uuid;
 use Arikaim\Core\Db\Traits\Find;
 use Arikaim\Core\Db\Traits\UserRelation;
+use Arikaim\Core\Db\Traits\Status;
 
 /**
  * Content db model class
  */
 class Content extends Model 
 {
-    use Uuid,     
+    use Uuid, 
+        Status,    
         Find,       
         UserRelation;
     
@@ -53,13 +55,40 @@ class Content extends Model
     public $timestamps = false;
     
     /**
+     * Save item
+     *
+     * @param string       $key
+     * @param string       $contentType
+     * @param string|int   $contentId
+     * @param string|null  $title
+     * @param integer|null $userId
+     * @return mixed
+     */
+    public function saveItem(string $key, string $contentType, $contentId, ?string $title, ?int $userId = null)
+    {
+        if ($this->hasContentItem($key,$userId) == true) {
+            return $this->update([
+                'content_type' => $contentType
+            ]);
+        }
+
+        return $this->create([
+            'key'           => $key,
+            'content_type'  => $contentType,
+            'content_id'    => $contentId,
+            'title'         => $title,
+            'user_id'       => $userId
+        ]);
+    }
+
+    /**
      * Find content by key
      *
      * @param string  $key
-     * @param integer $userId
+     * @param integer|null $userId
      * @return object|null
      */
-    public function findByKey(string $key, int $userId): ?object
+    public function findByKey(string $key, ?int $userId): ?object
     {
         return $this->findByKeyQuery($key,$userId)->first();
     }
@@ -68,10 +97,10 @@ class Content extends Model
      * Return true if content item exist
      *
      * @param string  $key
-     * @param integer $userId
+     * @param integer|int $userId
      * @return boolean
      */
-    public function hasContentItem(string $key, int $userId): bool
+    public function hasContentItem(string $key, ?int $userId): bool
     {
         return ($this->findByKey($key,$userId) !== null);
     }
@@ -81,13 +110,13 @@ class Content extends Model
      *
      * @param Builder  $query
      * @param string  $key
-     * @param integer $userId
+     * @param integer|null $userId
      * @return Builder
      */
-    public function scopeFindByKeyQuery($query, string $key, int $userId)
+    public function scopeFindByKeyQuery($query, string $key, ?int $userId)
     {
         return $query
-            ->where('key','=',\trim($key))
-            ->where('user_id','=',$userId);
+            ->userQuery($userId)
+            ->where('key','=',\trim($key));
     }
 }

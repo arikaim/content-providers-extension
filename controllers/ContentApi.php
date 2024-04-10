@@ -12,11 +12,15 @@ namespace Arikaim\Extensions\Content\Controllers;
 use Arikaim\Core\Controllers\ApiController;
 use Arikaim\Core\Db\Model;
 
+use Arikaim\Core\Controllers\Traits\Status;
+
 /**
  * Content api controller
 */
 class ContentApi extends ApiController
 {
+    use Status;
+
     /**
      * Init controller
      *
@@ -25,6 +29,8 @@ class ContentApi extends ApiController
     public function init()
     {
         $this->loadMessages('content>content.messages');
+        $this->setModelClass('Content');
+        $this->setExtensionName('content');
     }
 
     /**
@@ -75,8 +81,9 @@ class ContentApi extends ApiController
         $key = $data->get('key');  
         $contentType = \trim($data->get('content_type')); 
         $title = $data->get('title');   
-        $userId = $this->getUserId(); 
-
+        $public = $data->get('public',true);   
+        $userId = ($public == true) ? null : $this->getUserId(); 
+        
         $content = Model::Content('content');   
         if ($content->hasContentItem($key,$userId) == true) {
             $this->error('Content item key are used');
@@ -90,11 +97,11 @@ class ContentApi extends ApiController
         }
 
         $contentProvider = $this->get('content')->type($contentType);
-        $contyentItem = $contentProvider->createItem([
+        $contentItem = $contentProvider->createItem([
             'user_id' => $userId
         ]);
 
-        if ($contyentItem == null) {
+        if ($contentItem == null) {
             $this->error('Error create content item');
             return false;
         }
@@ -104,7 +111,7 @@ class ContentApi extends ApiController
             'user_id'      => $userId,
             'title'        => $title,
             'content_type' => $contentType,
-            'content_id'   => $contyentItem[0]
+            'content_id'   => $contentItem[0]
         ]);
 
         if ($item == null) {
@@ -134,7 +141,8 @@ class ContentApi extends ApiController
 
         $key = $data->get('key');  
         $fields = $data->get('fields',[]);
-        $userId = $this->getUserId();
+        $public = $data->get('public',true);   
+        $userId = ($public == true) ? null : $this->getUserId(); 
 
         $item = Model::Content('content')->findByKey($key,$userId);    
         if ($item == null) {
