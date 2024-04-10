@@ -8,7 +8,7 @@ arikaim.component.onLoaded(function() {
         arikaim.ui.form.showMessage(result.message);
 
         arikaim.page.loadContent({
-            id: 'content_editor',
+            id: 'content_details',
             component: 'content::admin.content.edit',
             params: {
                 uuid: result.uuid

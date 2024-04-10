@@ -31,15 +31,13 @@ function contentView() {
 
         arikaim.ui.button('.delete-content',function(element) {
             var uuid = $(element).attr('uuid');
-            var title = $(element).attr('data-title');
-
-            var message = arikaim.ui.template.render(self.getMessage('remove.content'),{ title: title });
+        
             modal.confirmDelete({ 
-                title: self.getMessage('remove.title'),
-                description: message
+                title: 'Confirm Delete',
+                description: 'Delete content item'
             },function() {
                 contentApi.delete(uuid,function(result) {
-                    $('#' + uuid).remove();                
+                    $('#' + result.uuid).remove();                
                 });
             });
         });

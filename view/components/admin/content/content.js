@@ -16,7 +16,7 @@ function ContentApi() {
         return arikaim.post('/api/content/add',formId,onSuccess,onError); 
     };
 
-    this.uodate = function(formId, onSuccess, onError) {
+    this.update = function(formId, onSuccess, onError) {
         return arikaim.put('/api/content/update',formId,onSuccess,onError); 
     };
 

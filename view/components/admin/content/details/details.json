@@ -3,10 +3,11 @@
     "icon": "info",
     "labels": {        
         "id": "Id",          
-        "key": "key",           
-        "title": "Title",             
+        "key": "Key",           
+        "title": "Title",         
         "type": "Type",
         "status": "Status",
+        "content": "Content Item",
         "item_id": "Item Id"
     }
 }

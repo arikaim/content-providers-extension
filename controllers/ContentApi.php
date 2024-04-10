@@ -28,6 +28,36 @@ class ContentApi extends ApiController
     }
 
     /**
+     * delete content item
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \Psr\Http\Message\ResponseInterface $response
+     * @param Validator $data
+     * @return mixed
+    */
+    public function delete($request, $response, $data) 
+    { 
+        $data
+            ->addRule('text:min=2','uuid')                     
+            ->validate(true); 
+
+        $item = Model::Content('content')->findById($data['uuid']);   
+        if ($item  == null) {
+            $this->error('Content item id not vlaid');
+            return false;
+        }
+
+        // check access
+        $this->requireUserOrControlPanel($item->user_id);
+
+        $item->delete();
+
+        $this
+            ->message('delete')
+            ->field('uuid',$data['uuid']);       
+    }
+
+    /**
      * Add content item
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
@@ -100,18 +130,33 @@ class ContentApi extends ApiController
     {       
         $data
             ->addRule('text:min=2','key')         
-            ->addRule('text:min=2','content_type')             
             ->validate(true);     
 
         $key = $data->get('key');  
-        $contentType = $data->get('content_type');  
-        $userId = $this->getUserId(); 
+        $fields = $data->get('fields',[]);
+        $userId = $this->getUserId();
 
-        $content = Model::Content('content');   
-                                                                  
+        $item = Model::Content('content')->findByKey($key,$userId);    
+        if ($item == null) {
+            $this->error('Not valid content key');
+            return false;
+        }
+      
+        $provider = $this->get('content')->getDefaultProvider($item->content_type);
+        if ($provider == null) {
+            $this->error('Not valid content type');
+            return false;
+        }
+        
+        $result = $provider->updateOrCreate($item->content_id,$fields);
+        if ($result === false) {
+            $this->error('Error save content item data');
+            return false;
+        }
+
         $this
-            ->message('add')
-            ->field('key',$content->key)              
-            ->field('uuid',$content->uuid);             
+            ->message('update')
+            ->field('key',$item->key)              
+            ->field('item_uuid',$item->uuid);             
     }
 }

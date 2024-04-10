@@ -21,6 +21,14 @@
                 </td>
             </tr>
             <tr>
+                <td class="right aligned">{{ labels.key }}</td>
+                <td>
+                    <div class="ui basic label">
+                        {{ content.key }}
+                    </div>                    
+                </td>
+            </tr>
+            <tr>
                 <td class="right aligned">{{ labels.status }}</td>
                 <td>
                     {{ component('semantic~status.label',{ status: content.status }) }}                   
@@ -53,6 +61,14 @@
                 </td>
             </tr>      
         </tbody>  
-    </table>     
+    </table>   
+    <h4 class="font-bold">
+        {{ labels.content }}
+    </h4>  
+    {{  component('content::item',{
+            content_type: content.content_type,
+            content_id: content.content_id
+        }) 
+    }}
 </div>
 {% endcomponent %}
