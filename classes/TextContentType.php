@@ -27,5 +27,6 @@ class TextContentType extends ContentType
         $this->setTitle('Text');
         // fields      
         $this->addField('text','text.area','Text');       
+        $this->addField('title','text','Title');       
     }
 }
