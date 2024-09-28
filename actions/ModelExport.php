@@ -92,6 +92,7 @@ class ModelExport extends Action
             $this->result('file_name',$fileName);
         } else {
             $this->error('Error exporting model');
+            $this->result('file_name',null);
         }
 
         return $result;
@@ -103,7 +104,7 @@ class ModelExport extends Action
      * @param object $model
      * @return array
      */
-    public function getRelationNames($model): array
+    public function getRelationNames(object $model): array
     {
         return \array_keys($model->getRelations());            
     }

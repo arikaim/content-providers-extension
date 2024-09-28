@@ -1,0 +1,13 @@
+{
+    "title": "Export data item",
+    "icon": "file export",
+    "labels": {     
+        "uuid": "Uuid",
+        "model": "Db Model",
+        "file_name": "File Name",
+        "export": "Export model to file"        
+    },
+    "buttons": {
+        "export": "Export"
+    }
+}

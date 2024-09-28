@@ -1,0 +1,25 @@
+{%  set action = createAction('ModelExport','content',{
+        model_class: model_class,
+        schema_class: schema_class,
+        extension: extension,
+        uuid: uuid 
+    }) 
+%}
+{% set result = action.run() %}
+<div>
+    {% if action.hasError() == true %}
+        <div class="ui basic error message">
+            {{ action.getError() }}
+        </div>
+    {% else %}
+        <div class="mt-8 mb-2">
+            {{ labels.file_name }}
+        </div>
+        <div class="ui basic label">
+            {{ action.get('file_name') }}
+        </div>
+        <div class="ui success message">
+            {{ message }}
+        </div>
+    {% endif %}
+</div>

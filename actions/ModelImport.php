@@ -61,7 +61,7 @@ class ModelImport extends Action
         $unique = $item['unique'] ?? [];
         $extension = $item['extension'] ?? null; 
         $data = $item['data'];
-
+      
         $schema = Factory::createSchema($schemaClass,$extension);
         if ($schema == null) {
             $this->error("Not valid schema class or extension name!");
@@ -115,12 +115,37 @@ class ModelImport extends Action
             if ($new === null) {
                 $this->error('Error import model');
             } else {
+                // import relations
+                $this->importRelations($model,$item['relations'] ?? []);
                 $this->result('message','Created model: ' . $new->uuid);
             }
         }
     
         return ($this->hasError() == false);
     }
+
+    /**
+     * Get relations names
+     *
+     * @param object $model
+     * @return array
+     */
+    public function getRelationNames(object $model): array
+    {
+        return \array_keys($model->getRelations());            
+    }
+
+    /**
+     * Import model relations
+     *
+     * @param object $model
+     * @param array  $data
+     * @return void
+     */
+    public function importRelations(object $model, array $data)
+    {
+
+    } 
 
     /**
     * Init descriptor properties 
