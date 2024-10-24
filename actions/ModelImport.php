@@ -41,13 +41,14 @@ class ModelImport extends Action
         global $arikaim;
 
         $update = $this->getOption('update',true);
-
         $fileName = $this->getOption('file_name');
+        $path = $this->getOption('path','');
         if (empty($fileName) == true) {
             $this->error("File name not set!");
             return false;
         }
 
+        $fileName = $path . $fileName;
         $content = $arikaim->get('storage')->read($fileName);
         if ($content === false) {
             $this->error("Not valid file name!");
@@ -61,17 +62,18 @@ class ModelImport extends Action
         $unique = $item['unique'] ?? [];
         $extension = $item['extension'] ?? null; 
         $data = $item['data'];
-      
+        $relations = $item['relations'];
+
         $schema = Factory::createSchema($schemaClass,$extension);
         if ($schema == null) {
             $this->error("Not valid schema class or extension name!");
             return false;
         }
 
-        if (($schema instanceof ImportModelInterface) == false) {
-            $this->error("Db schema model not allow import!");
-            return false;
-        }
+        //if (($schema instanceof ImportModelInterface) == false) {
+            //$this->error("Db schema model not allow import!");
+            //return false;
+        //}
 
         $model = Model::create($modelClass,$extension);
         if ($model == null) {
@@ -79,48 +81,10 @@ class ModelImport extends Action
            return false;
         }
 
-        $skipColumns = $schema->getSkipedImportColumns();
-        $columns = $model->getFillable();
-        $modelData = [];
-        foreach ($columns as $column) {
-            if (isset($data[$column]) == true && \in_array($column,$skipColumns) == false) {
-                $modelData[$column] = $data[$column];
-            }
-        }
+        print_r($relations);
+        //$model->fill($data);
+      //  $model->save();
 
-        foreach ($unique as $column) {
-            if (isset($data[$column]) == true && \in_array($column,$skipColumns) == false) {
-                $modelData[$column] = $data[$column];
-            }
-        }
-
-        $uniqueQuery = $this->createSearchValues($unique,$modelData); 
-         
-        if ($model->where($uniqueQuery)->exists() == true) {
-            if ($update == true) {
-                $model = $model->where($uniqueQuery)->first();
-                $result = $model->update($modelData);
-                if ($result === false) {
-                    $this->error('Error update model');
-                } else {
-                    $this->result('message','Updated model: ' . $model->uuid);
-                }
-            } else {
-                $model = $model->where($uniqueQuery)->first();
-                $this->error('Model exist' . $model->uuid);
-            }
-          
-        } else {            
-            $new = $model->create($modelData);
-            if ($new === null) {
-                $this->error('Error import model');
-            } else {
-                // import relations
-                $this->importRelations($model,$item['relations'] ?? []);
-                $this->result('message','Created model: ' . $new->uuid);
-            }
-        }
-    
         return ($this->hasError() == false);
     }
 

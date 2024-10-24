@@ -27,6 +27,7 @@ class ModelImportCommand extends ConsoleCommand
         $this->setName('model:import');
         $this->setDescription('Import model from json file.'); 
         $this->addOptionalArgument('file-name','File name');
+        $this->addOptionalArgument('path','File path');
     }
 
     /**
@@ -45,8 +46,14 @@ class ModelImportCommand extends ConsoleCommand
             $fileName = $this->question("Enter file name: ",null);            
         }
 
+        $path = $input->getArgument('path');
+        if (empty($path) == true) {
+            $path = $this->question("Enter file path: ",null);            
+        }
+
         $action = Actions::create('ModelImport','content',[
-            'file_name' => $fileName
+            'file_name' => $fileName,
+            'path'      => $path
         ])->getAction();
 
         $result = $action->run();
