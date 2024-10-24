@@ -108,7 +108,7 @@ class ModelExport extends Action
     {
         $relations = [];
         foreach ($model->relationsToArray() as $key => $value) {
-            $relation = $model->getRelationValue($key);
+            $relation = $model->{$key}()->getRelated();
             $relations[$key] = [
                 'class' => get_class($relation),
                 'data'  => $value

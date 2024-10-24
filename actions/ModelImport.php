@@ -115,13 +115,27 @@ class ModelImport extends Action
         foreach ($data as $key => $value) {
             $relationClass = $value['class'];
             $data = $value['data'];
-            echo "key: $key";
+            echo "key: $key class: $relationClass";
             print_r($data);
 
             $relation = new $relationClass();
 
+            if (isset($data[0]) == true) {
+               // $this->importHasMany($relation,$data);
+            } else {
+              //  $relation->fill($data);
+              //  $relation->save();
+            }
         }
     } 
+
+    public function importHasMany($relation, $data)
+    {
+        foreach ($data as $item) {
+            $relation->fill($item);
+            $relation->save();
+        }
+    }
 
     /**
     * Init descriptor properties 
