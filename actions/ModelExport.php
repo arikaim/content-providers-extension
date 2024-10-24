@@ -66,7 +66,7 @@ class ModelExport extends Action
 
         $fileName = $this->getFileName($model);
         $data = $model->toArray();
-        $relations = $model->relationsToArray();
+        $relations = $this->exportRelations($model);
         $relationNames = $this->getRelationNames($model);
       
         // remove relations data 
@@ -96,6 +96,26 @@ class ModelExport extends Action
         }
 
         return $result;
+    }
+
+    /**
+     * Export relations to array
+     *
+     * @param object $model
+     * @return array
+     */
+    public function exportRelations(object $model): array
+    {
+        $relations = [];
+        foreach ($model->relationsToArray() as $key => $value) {
+            $relation = $model->getRelationValue($key);
+            $relations[$key] = [
+                'class' => get_class($relation),
+                'data'  => $value
+            ];       
+        }
+
+        return $relations;
     }
 
     /**
