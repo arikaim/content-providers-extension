@@ -60,8 +60,7 @@ class ModelImportCommand extends ConsoleCommand
 
         if ($result === false) {
             $this->showError($action->getError());           
-        } else {
-            $this->writeLn($action->get('message'));
+        } else {         
             $this->showCompleted();
         }
     }   

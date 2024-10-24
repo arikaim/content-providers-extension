@@ -81,9 +81,13 @@ class ModelImport extends Action
            return false;
         }
 
-        print_r($relations);
+        $model->fill($data);
+        $this->importRelations($model,$relations);
+
+        //print_r($data);
         //$model->fill($data);
-      //  $model->save();
+        //$model->push($data);
+        //$model->save();
 
         return ($this->hasError() == false);
     }
@@ -108,7 +112,15 @@ class ModelImport extends Action
      */
     public function importRelations(object $model, array $data)
     {
+        foreach ($data as $key => $value) {
+            $relationClass = $value['class'];
+            $data = $value['data'];
+            echo "key: $key";
+            print_r($data);
 
+            $relation = new $relationClass();
+
+        }
     } 
 
     /**
