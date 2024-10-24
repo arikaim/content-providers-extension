@@ -10,7 +10,8 @@
         "homepage": "http://arikaim.com"
     }],
     "require": {
-        "arikaim/installer": "*"       
+        "arikaim/installer": "*",
+        "justinrainbow/json-schema": "^6.0"       
     },
     "extra": {
         "path": "content"
