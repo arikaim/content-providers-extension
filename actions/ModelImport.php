@@ -13,8 +13,7 @@ use Arikaim\Core\Db\Model;
 use Arikaim\Core\Utils\Utils;
 use Arikaim\Core\Utils\Factory;
 use Arikaim\Core\Actions\Action;
-
-use Arikaim\Core\Interfaces\ImportModelInterface;
+use Arikaim\Core\Db\Schema;
 
 /**
 * Model import from Json action
@@ -70,27 +69,80 @@ class ModelImport extends Action
             return false;
         }
 
-        //if (($schema instanceof ImportModelInterface) == false) {
-            //$this->error("Db schema model not allow import!");
-            //return false;
-        //}
-
         $model = Model::create($modelClass,$extension);
         if ($model == null) {
            $this->error("Not valid model class or extension name!");
            return false;
         }
 
-        $model->fill($data);
-        $this->importRelations($model,$relations);
+        Schema::schema()->disableForeignKeyConstraints();
 
-        //print_r($data);
-        //$model->fill($data);
-        //$model->push($data);
-        //$model->save();
+        $this->importRelations($model,$relations);
+        // import model
+        $this->saveModel($model,$data);
+        
+        Schema::schema()->enableForeignKeyConstraints();
 
         return ($this->hasError() == false);
     }
+
+    /**
+     * Save model
+     *
+     * @param object $model
+     * @param array  $data
+     * @return object
+     */
+    protected function saveModel(object $model, array $data): object
+    {
+        $info = $this->getFillable($model,$data);
+
+        $item = $model->findById($data['uuid']);
+        if ($item == null) {
+            $model->id = $data['id'];
+            $saved = $model->create($info);
+        } else {
+            $item->update($info);
+            $saved = $item;
+        }
+        
+        return $saved;
+    }
+
+    /**
+     * Get fileble attr values
+     *
+     * @param object $model
+     * @param array  $data
+     * @return array
+     */
+    protected function getFillable(object $model, array $data): array
+    {
+        $result = [];
+        foreach ($model->getFillable() as $key) {
+            $result[$key] = $data[$key] ?? null;
+        }
+
+        return $result;
+    }   
+
+    /**
+     * Fil model attributes
+     *
+     * @param object $model
+     * @param array  $data
+     * @return object
+     */
+    protected function fillModel(object $model, array $data): object
+    {
+        $model->id = $data['id'];
+
+        foreach ($model->getFillable() as $key) {
+            $model->{$key} = $data[$key] ?? null;
+        }
+
+        return $model;
+    }   
 
     /**
      * Get relations names
@@ -116,34 +168,29 @@ class ModelImport extends Action
             $relationClass = $value['class'];
             $data = $value['data'];
             echo "key: $key class: $relationClass" . PHP_EOL;
-        
-
             $relation = new $relationClass();
 
             if (isset($data[0]) == true) {
                 $this->importHasMany($relation,$data);
             } else {
                 if (count($data) !== 0) {
-                    $relation->fill($data);
-                    if ($relation->exists() == false) {
-                        print_r($data);
-                        $relation->save();
-                    }
-                   
-                }
-                
+                    $this->saveModel($relation,$data);
+                }                
             }
         }
     } 
 
-    public function importHasMany($relation, $data)
+    /**
+     * Import hasMany relation
+     *
+     * @param object $relation
+     * @param array $data
+     * @return void
+     */
+    public function importHasMany(object $relation, $data): void
     {
         foreach ($data as $item) {
-            $relation->fill($item);
-            if ($relation->exists() == false) {
-                print_r($data);
-                $relation->save();
-            }
+            $this->saveModel($relation,$item);            
         }
     }
 
