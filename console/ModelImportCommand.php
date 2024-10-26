@@ -10,13 +10,15 @@
 namespace Arikaim\Extensions\Content\Console;
 
 use Arikaim\Core\Console\ConsoleCommand;
-use Arikaim\Core\Actions\Actions;
+use Arikaim\Core\Console\Traits\Actions;
 
 /**
  * Model import console command
  */
 class ModelImportCommand extends ConsoleCommand
 {  
+    use Actions;
+
     /**
      * Configure command
      *
@@ -51,17 +53,10 @@ class ModelImportCommand extends ConsoleCommand
             $path = $this->question("Enter file path: ",null);            
         }
 
-        $action = Actions::create('ModelImport','content',[
+        $this->runAction('ModelImport','content',[
             'file_name' => $fileName,
             'path'      => $path
-        ])->getAction();
+        ]);
 
-        $result = $action->run();
-
-        if ($result === false) {
-            $this->showError($action->getError());           
-        } else {         
-            $this->showCompleted();
-        }
     }   
 }

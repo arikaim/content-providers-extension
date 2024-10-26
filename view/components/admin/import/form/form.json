@@ -1,0 +1,10 @@
+{
+    "labels": {
+        "file": "File",
+        "upload": "Uplaod File",
+        "type": "Type"
+    },   
+    "buttons": {
+        "upload": "Upload & Import"
+    }
+}

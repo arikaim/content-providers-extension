@@ -77,7 +77,7 @@ class ModelImport extends Action
 
         Schema::schema()->disableForeignKeyConstraints();
 
-        $this->importRelations($model,$relations);
+        $this->importRelations($relations);
         // import model
         $this->saveModel($model,$data);
         
@@ -100,6 +100,7 @@ class ModelImport extends Action
         $item = $model->findById($data['uuid']);
         if ($item == null) {
             $model->id = $data['id'];
+            $model->incrementing = false;
             $saved = $model->create($info);
         } else {
             $item->update($info);
@@ -120,7 +121,8 @@ class ModelImport extends Action
     {
         $result = [];
         foreach ($model->getFillable() as $key) {
-            $result[$key] = $data[$key] ?? null;
+            $value = $data[$key] ?? null;
+            $result[$key] = (\is_array($value) == true) ? Utils::jsonEncode($value) : $value;
         }
 
         return $result;
@@ -158,16 +160,14 @@ class ModelImport extends Action
     /**
      * Import model relations
      *
-     * @param object $model
      * @param array  $data
      * @return void
      */
-    public function importRelations(object $model, array $data)
+    public function importRelations(array $data)
     {
-        foreach ($data as $key => $value) {
-            $relationClass = $value['class'];
-            $data = $value['data'];
-            echo "key: $key class: $relationClass" . PHP_EOL;
+        foreach ($data as $item) {
+            $relationClass = $item['class'];
+            $data = $item['data'];         
             $relation = new $relationClass();
 
             if (isset($data[0]) == true) {
