@@ -12,7 +12,6 @@ namespace Arikaim\Extensions\Content\Controllers;
 use Arikaim\Core\Controllers\ControlPanelApiController;
 use Arikaim\Core\Controllers\Traits\FileUpload;
 use Arikaim\Core\Controllers\Traits\Actions;
-//use Arikaim\Core\Actions\Actions;
 
 /**
  * Content control panel api controller

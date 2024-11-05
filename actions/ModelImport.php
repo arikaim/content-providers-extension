@@ -98,6 +98,8 @@ class ModelImport extends Action
         $info = $this->getFillable($model,$data);
 
         $item = $model->findById($data['uuid']);
+        $item = ($item == null) ? $model->findByid($data['id']) : $item;
+        
         if ($item == null) {
             $model->id = $data['id'];
             $model->incrementing = false;
