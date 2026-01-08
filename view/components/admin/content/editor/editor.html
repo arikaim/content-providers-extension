@@ -3,7 +3,7 @@
     {% set content = provider.get(content_id) %}
 {% endif %}
 
-<form class="ui form" id="content_edit_form">
+<form class="form" id="content_edit_form">
     <input type="hidden" name="key" value="{{ key }}">
     {% for field in fields %} 
         {{ component('content::admin.content.editor.field',{ 
@@ -11,5 +11,6 @@
             value: (content is empty) ? null : content.getValue(field.getName())
         }) }}
     {% endfor %}
-    {{ component('semantic~form.footer') }}   
+    
+    {{ component('system:form.footer') }}   
 </form>

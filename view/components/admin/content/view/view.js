@@ -22,39 +22,29 @@ function contentView() {
             }); 
         });
         
-        $('.status-dropdown').dropdown({
-            onChange: function(value) {
-                var uuid = $(this).attr('uuid');
-                contentApi.setStatus(uuid,value);               
-            }
+        $('.status-dropdown').on('change', function() {
+            var value = $(this).val();
+            var uuid = $(this).attr('uuid');
+            
+            contentApi.setStatus(uuid,value);               
         });
 
         arikaim.ui.button('.delete-content',function(element) {
             var uuid = $(element).attr('uuid');
-        
-            modal.confirmDelete({ 
-                title: 'Confirm Delete',
-                description: 'Delete content item'
-            },function() {
+            
+            arikaim.ui.getComponent('confirm_delete').open(function() {
                 contentApi.delete(uuid,function(result) {
                     $('#' + result.uuid).remove();                
                 });
-            });
+            },'Delete content item');          
         });
     };
 
     this.init = function() {
         this.loadMessages('content::admin');
-
-        paginator.init('items_list',{
-            name: 'content::admin.content.view.rows',
-            params: {
-                namespace: 'content'
-            }
-        }); 
-
-        contentView.initRows();
         arikaim.ui.loadComponentButton('.create-content');
+
+        this.initRows();        
     };
 }
 

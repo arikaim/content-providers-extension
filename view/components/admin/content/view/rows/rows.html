@@ -14,26 +14,31 @@
             title="{{ labels.details }}"
             mountTo="content_details"
             component="content::admin.content.details"
-            class="ui icon mini compact basic button content-action" 
+            class="{{ theme.buttons.icon }} content-action" 
             params="uuid:{{ item.uuid }}">
-            <i class="icon info"></i>
+            {{ component('icons~info',theme.icons.menu,'svg') }}
         </button>
         <button 
             title="{{ labels.edit }}"
-            class="ui icon mini compact basic button edit-content" 
+            class="{{ theme.buttons.icon }} edit-content" 
             uuid="{{ item.uuid }}">
-            <i class="icon edit"></i>
+            {{ component('icons~edit',theme.icons.menu,'svg') }}
         </button>
         <button 
             title="{{ labels.delete }}"
-            class="ui icon basic mini compact button delete-content" 
+            class="{{ theme.buttons.icon }} delete-content" 
             uuid="{{ item.uuid }}" 
             data-title="{{ item.title }}">
-            <i class="icon trash orange"></i>
+            {{ component('icons~trash',theme.icons.delete,'svg') }}
         </button>                     
     </td>
     <td>
-        {{ component('semantic~status.dropdown',{ status: item.status, uuid: item.uuid, skip: [2,3,4,5,6] }) }} 
+        {{  component('system:admin.status.dropdown',{ 
+                status: item.status, 
+                uuid: item.uuid, 
+                skip: [2,3,4,5,6] 
+            }) 
+        }} 
     </td>
     <td>
         {{ item.key }}

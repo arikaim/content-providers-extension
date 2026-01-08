@@ -1,33 +1,29 @@
 {% if uuid is not empty %}
     {% set content = createModel('Content','content').findById(uuid) %}
 {% endif %}
-{% set type = service('content').typeRegistry().get(content.content_type) %}
+{% set content_type = service('content').typeRegistry().get(content.content_type) %}
 
-{% component 'semantic~panel' %}  
-    <div class="ui two column grid" id="content_editor">
-        <div class="column">
-            <h4 class="font-bold">
-                {{ labels.item }}
-            </h4>
-            <div class="ui basic label">
-                {{ content.key }}
-            </div>
+{% component 'system:admin.panel' %}  
+    <div class="mt-2" id="content_editor">     
+        <h4 class="font-bold">
+            {{ labels.item }}
+        </h4>
+        <div class="badge badge-sm badge-outline">
+            {{ content.key }}
         </div>
-        <div class="column">
-            <h4 class="font-bold">
-                {{ labels.type }}
-            </h4>
-            <div class="ui label basic">
-                {{ content.content_type }}
-            </div>
-        </div>
+        <h4 class="font-bold mt-2">
+            {{ labels.type }}
+        </h4>
+        <div class="badge badge-sm badge-outline">
+            {{ content.content_type }}
+        </div>        
     </div> 
     <div class="mt-4">
         {{  component('content::admin.content.editor',{ 
                 key: content.key,
                 content_type: content.content_type,
                 content_id: content.content_id,
-                fields: type.getFields() 
+                fields: content_type.getFields() 
             }) 
         }}
     </div>  

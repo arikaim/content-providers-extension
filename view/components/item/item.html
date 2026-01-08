@@ -4,32 +4,30 @@
 {% set fields = content_item.fields() %}
 {% set exclude = exclude|default([]) %}
 {% if fields is not iterable %}
-<div class="ui message">
-    {{ message }}
-</div>
+    {{ component('system:admin.alert.warning',{ message: message }) }}
 {% endif %}
+
 <div {{ class|attr('class') }}>
     {% if hide_title != true %}
-        {{  component('semantic~segment-title',{ 
-                icon: icon, 
-                title: content_item.getType.getTitle(),
-                close_button: close_button, 
-            }) 
-        }}      
+    <h4 class="font-bold my-2">
+        {{ content_item.getType.getTitle() }}
+    </h4>           
     {% endif %}
-    <table class="ui table very basic definition {{ table_class }}">
+    <table class="{{ theme.table.details }} {{ table_class }}">
         <thead>
             <tr>
-                <th class="four wide"></th>
+                <th class="1/3"></th>
                 <th></th>              
             </tr>
         </thead>
         <tbody>
             {% if hide_id != true %}
             <tr>
-                <td class="right aligned">{{ labels.id }}</td>
+                <td class="{{ theme.table.field.label }}">
+                    {{ labels.id }}
+                </td>
                 <td>
-                    <div class="ui basic label">
+                    <div class="badge badge-sm badge-outline">
                         {{ content_item.getId() }}
                     </div>
                 </td>
@@ -40,10 +38,10 @@
                 {% if (value is not empty) or (hide_empty != true and value is empty) %}
                     {% if field.getName() not in exclude %}
                     <tr>
-                        <td class="right aligned flex flex-rows items-center">
+                        <td class="{{ theme.table.field.label }} flex flex-rows items-center">
                             <div class="px-1">
                                 {% if value is not empty and hide_copy != true %}
-                                    {{  component('semantic~clipboard.copy',{ 
+                                    {{  component('system:clipboard.copy',{ 
                                             type: 'element',
                                             focus_element: focus_element, 
                                             selector: '#field_' ~ field.getName() 

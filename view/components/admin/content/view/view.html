@@ -1,28 +1,21 @@
-<div class="ui segment">
-    <div class="ui stackable grid">
-        <div class='ten wide column'>
-            <button 
-                mountTo="content_details"
-                component="content::admin.content.add"
-                title="{{ tooltip.create }}"
-                class="ui mini curcular green icon button create-content">
-                <i class="icon plus"></i>
-            </button>
-        </div>
-        <div class="six wide column right aligned">       
-            {{ component('semantic~paginator.dropdown',{ class: 'mini', namespace: 'content' }) }}
-        </div>
-    </div>
+<div class="{{ theme.panel }}">    
+    <button 
+        mountTo="content_details"
+        component="content::admin.content.add"
+        title="{{ tooltip.create }}"
+        class="{{ theme.buttons.green }} create-content">
+        {{ buttons.create }}
+    </button>      
 </div>
-<div class="ui segment">
-    <table class="ui compact stackable borderless basic table">
+<div class="mt-4 {{ theme.panel }}">
+    <table class="{{ theme.table.default }}">
         <thead>
-            <tr class="table-head">                          
-                <th class="three wide">{{ columns.action }}</th>
-                <th class="three wide">{{ columns.status }}</th>
-                <th class="three wide">{{ columns.key }}</th>
-                <th class="one wide">{{ columns.type }}</th>
-                <th class="two wide">{{ columns.user }}</th>               
+            <tr>                          
+                <th class="w-32">{{ columns.action }}</th>
+                <th class="min-w-32">{{ columns.status }}</th>
+                <th class="w-full">{{ columns.key }}</th>
+                <th >{{ columns.type }}</th>
+                <th >{{ columns.user }}</th>               
             </tr>
         </thead>
         <tbody 
@@ -33,6 +26,6 @@
         </tbody>  
     </table>
     <div class="mt-2">
-        {{ component('semantic~paginator',{ namespace: 'content' }) }}
+       
     </div>
 </div>

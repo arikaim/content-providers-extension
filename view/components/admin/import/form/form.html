@@ -1,16 +1,24 @@
 {% set type = type|default('json') %}
-<form class="ui form" id="file_form" enctype="multipart/form-data">
+<form class="form" id="file_form" enctype="multipart/form-data">
     <div class="my-2 flex flex-row items-center">
         <div class="font-bold pr-2">
             {{ labels.type }}
         </div> 
-        <div class="ui basic label">
+        <div class="badge badge-sm badge-outline">
             {{ type }}
         </div>  
     </div>
-    <div class="field">               
-        <label>{{ labels.file }}</label>           
-        <input name="file[]" id="file" type="file" acceptedFileTypes="text/json,application/json">                       
+    <div class="{{ theme.form.field }}">               
+        <label class="{{ theme.form.label }}">
+            {{ labels.file }}
+        </label>           
+        <input 
+            name="file[]" 
+            id="file" 
+            type="file" 
+            acceptedFileTypes="text/json,application/json">                       
     </div>   
-    {{ component('semantic~form.footer',{ button_title: buttons.upload }) }}    
+    <div class="mt-2">
+        {{ component('system:form.footer',{ button_title: buttons.upload }) }} 
+    </div>   
 </form>

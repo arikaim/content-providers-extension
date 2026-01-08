@@ -1,10 +1,33 @@
-{{  component('semantic~tabs',{ 
+{{  component('system:admin.tabs',{ 
         items: [ 
-            { id: 'content_button', title: labels.content, component: 'content::admin.content', icon: 'list', active: true },     
-            { id: 'providers_button', title: labels.providers, component: 'content::admin.providers.view', icon: 'database'},     
-            { id: 'types_button', title: labels.types, component: 'content::admin.types.view', icon: 'code' },       
+            {               
+                title: labels.content, 
+                component: 'content::admin.content', 
+                svg_icon: 'icons~list', 
+                active: true 
+            },     
+            {                
+                title: labels.providers, 
+                component: 'content::admin.providers.view', 
+                svg_icon: 'icons~database', 
+            },     
+            {              
+                title: labels.types, 
+                component: 'content::admin.types.view', 
+                svg_icon: 'icons~code', 
+            },       
         ],
-        menu: { extension: 'content' },
-        content: { component: 'content::admin.content'} 
+        menu: { 
+            extension: 'content' 
+        },
+        content: { 
+            component: 'content::admin.content'
+        } 
     })
+}}
+
+
+{{  component('system:admin.modal.confirm',{
+        id: 'confirm_delete'      
+    }) 
 }}

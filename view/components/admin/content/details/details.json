@@ -1,6 +1,6 @@
 {
     "title": "Content Details",
-    "icon": "info",
+    "icon": "icons~info",
     "labels": {        
         "id": "Id",          
         "key": "Key",           

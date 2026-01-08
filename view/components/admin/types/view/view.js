@@ -9,7 +9,8 @@
 function ContentTypesView() {
     var self = this;
 
-    this.init = function() {     
+    this.init = function() {
+        this.initRows();     
     };
 
     this.initRows = function() {
@@ -31,6 +32,5 @@ function ContentTypesView() {
 var contentTypesView = createObject(ContentTypesView,ControlPanelView);
 
 arikaim.component.onLoaded(function() {
-    contentTypesView.init();
-    contentTypesView.initRows();
+    contentTypesView.init();   
 });

@@ -1,5 +1,6 @@
 {
     "title": "Content Type ",
+    "icon": "icons~code",
     "labels": {    
         "name": "Name",
         "type": "Type",

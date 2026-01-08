@@ -8,14 +8,12 @@
 {% set result = action.run() %}
 <div>
     {% if action.hasError() == true %}
-        <div class="ui basic error message">
-            {{ action.getError() }}
-        </div>
+        {{ component('system:admin.alert.error',{ message: action.getError() }) }}       
     {% else %}
         <div class="mt-8 mb-2">
             {{ labels.file_name }}
         </div>
-        <div class="ui basic label">
+        <div class="badge badge-sm badge-outline">
             {{ action.get('file_name') }}
         </div>
         <div class="ui success message">

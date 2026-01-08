@@ -2,6 +2,9 @@
     "tooltip": {
         "create": "Create"
     },
+    "buttons": {
+        "create": "Create"
+    },
     "columns": {
         "action": "Action",
         "status": "Status",

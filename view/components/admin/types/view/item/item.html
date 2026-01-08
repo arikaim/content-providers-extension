@@ -1,10 +1,10 @@
-<div class="item" id="row_{{ content_type.name }}">
-    <div class="content">                      
-        <div class="header">
-            <i class="icon blue angle right"></i>                          
-            <a class="link content-type-details" content-type="{{ content_type.name }}">
-                {{ content_type.title|default(content_type.name) }}  
-            </a>                       
-        </div>                      
-    </div>     
+<div 
+    class="flex flex-row items-center" 
+    id="row_{{ content_type.name }}">
+    {{ component('icons~code',theme.icons.blue,'svg') }}                         
+    <a 
+        class="ml-2 link content-type-details" 
+        content-type="{{ content_type.name }}">
+        {{ content_type.title|default(content_type.name) }}  
+    </a>                               
 </div>

@@ -3,24 +3,44 @@
 {% endif %}
 <form class="ui equal width form" id="content_form">  
     <input type="hidden" name="uuid" id="uuid" value="{{ uuid }}">     
-    <div class="two fields">
-        <div class="field required">
-            <label>{{ fields.key.label }}</label>
-            <input rule="minLength[2]" type="text" name="key" id="key" {{ fields.code.placeholder|attr('placeholder') }} 
+    <div class="{{ theme.form.field }}">
+        <label class="{{ theme.form.label }}">
+            {{ fields.title.label }}
+        </label>
+        <input 
+            class="{{ theme.form.input }}"
+            type="text" 
+            name="title" 
+            id="title" 
+            {{ fields.title.placeholder|attr('placeholder') }} 
+            value="{{ content.title }}">  
+    </div>
+
+    <div class="{{ theme.form.fields }}">
+        <div class="{{ theme.form.field }} required">
+            <label class="{{ theme.form.label }}">
+                {{ fields.key.label }}
+            </label>
+            <input 
+                class="{{ theme.form.input }}"
+                rule="minLength[2]" 
+                type="text" 
+                name="key" 
+                id="key" 
+                {{ fields.code.placeholder|attr('placeholder') }} 
                 value="{{ content.key }}"> 
         </div>    
-        <div class="field required">
-            <label>{{ fields.type.label }}</label>
-            {{ component('content::admin.types.dropdown',{}) }}
+        <div class="{{ theme.form.field }} required">
+            <label class="{{ theme.form.label }}">
+                {{ fields.type.label }}
+            </label>
+            {{  component('content::admin.types.dropdown',{
+                    size: 'select-md'
+                }) 
+            }}
         </div>  
     </div>    
-    <div class="two fields">
-        <div class="field">
-            <label>{{ fields.title.label }}</label>
-            <input type="text" name="title" id="title" {{ fields.title.placeholder|attr('placeholder') }} 
-                value="{{ content.title }}">  
-        </div>
-        <div class="field"></div>
-    </div>
-    {{ component('semantic~form.footer') }}   
+    <div class="mt-4">
+        {{ component('system:form.footer') }}   
+    </div>   
 </form>

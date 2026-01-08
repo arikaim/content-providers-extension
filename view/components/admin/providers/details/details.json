@@ -1,5 +1,6 @@
 {
     "title": "Provider",
+    "icon": "icons~database",
     "labels": {    
         "name": "Name",
         "data": "Data",

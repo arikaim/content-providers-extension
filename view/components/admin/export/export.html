@@ -1,40 +1,39 @@
 {% if uuid is not empty %}
     {% set model = createModel(model_class,extension).findById(uuid) %}
 {% endif %}
-{% component 'semantic~panel' %}
-    <div class="w-full">
-        <h4>
-            {{ model.title|default(model.name)  }}
-        </h4>
-        <div class="flex flex-row items-center">
-            <div class="px-1">
-                {{ labels.model }}
-            </div>
-            <div class="ui basic label">
-                {{ model_class }}
-            </div>
-            <div class="ui basic label">
-                {{ extension }}
-            </div>
+{% component 'system:admin.panel' %}
+  
+    <h4 class="font-bold mt-2">
+        {{ model.title|default(model.name)  }}
+    </h4>
+    <div class="flex flex-row items-center">
+        <div class="px-1">
+            {{ labels.model }}
         </div>
-        <div class="mt-4">
-            <div class="px-1 font-bold">
-                {{ labels.uuid }}
-            </div>
-            <div class="ui basic label">
-                {{ uuid }}
-            </div>
+        <div class="badge badge-sm badge-outline">
+            {{ model_class }}
         </div>
-        <div class="mt-4">
-            <button 
-                mountTo="export_model_result"
-                component="content::admin.export.run"
-                params="model_class:{{ model_class }},schema_class:{{ schema_class }},extension:{{ extension }},uuid:{{ uuid }}"
-                class="ui green button export-model-item">
-                {{ buttons.export }}
-            </button> 
+        <div class="badge badge-sm badge-outline">
+            {{ extension }}
         </div>
-        <div class="mt-4" id="export_model_result">
+    </div>
+    <div class="mt-4">
+        <div class="px-1 font-bold">
+            {{ labels.uuid }}
         </div>
+        <div class="badge badge-sm badge-outline">
+            {{ uuid }}
+        </div>
+    </div>
+    <div class="mt-4">
+        <button 
+            mountTo="export_model_result"
+            component="content::admin.export.run"
+            params="model_class:{{ model_class }},schema_class:{{ schema_class }},extension:{{ extension }},uuid:{{ uuid }}"
+            class="{{ theme.buttons.green }} export-model-item">
+            {{ buttons.export }}
+        </button> 
+    </div>
+    <div class="mt-4" id="export_model_result">
     </div>
 {% endcomponent %}
