@@ -3,19 +3,22 @@
 {% endif %}
 {% component 'system:admin.panel' %}
   
-    <h4 class="font-bold mt-2">
+    <h4 class="font-bold my-2">
         {{ model.title|default(model.name)  }}
     </h4>
     <div class="flex flex-row items-center">
         <div class="px-1">
             {{ labels.model }}
         </div>
-        <div class="badge badge-sm badge-outline">
+        <div class="ml-2 badge badge-sm badge-outline">
             {{ model_class }}
         </div>
-        <div class="badge badge-sm badge-outline">
+        <div class="ml-2">
+            {{ labels.extension }}
+        </div>            
+        <div class="ml-2 badge-info font-bold badge badge-sm">
             {{ extension }}
-        </div>
+        </div>         
     </div>
     <div class="mt-4">
         <div class="px-1 font-bold">

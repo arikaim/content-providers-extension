@@ -16,8 +16,10 @@
         <div class="badge badge-sm badge-outline">
             {{ action.get('file_name') }}
         </div>
-        <div class="ui success message">
-            {{ message }}
-        </div>
+        {{  component('system:admin.alert.success',{ 
+                message: message,
+                class: 'mt-4'
+            }) 
+        }}       
     {% endif %}
 </div>

@@ -1,9 +1,10 @@
 {
     "title": "Export data item",
-    "icon": "file export",
+    "icon": "icons~document",
     "labels": {     
         "uuid": "Uuid",
         "model": "Db Model",
+        "extension": "Extension",
         "file_name": "File Name",
         "export": "Export model to file"        
     },
