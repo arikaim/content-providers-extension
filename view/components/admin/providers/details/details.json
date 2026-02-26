@@ -3,8 +3,7 @@
     "icon": "icons~database",
     "labels": {    
         "name": "Name",
-        "data": "Data",
-        "details": "Details",
+        "data": "Data",      
         "title": "Title",
         "types": "Content Types",
         "category": "Category",

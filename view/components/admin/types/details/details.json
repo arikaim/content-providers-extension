@@ -3,8 +3,7 @@
     "icon": "icons~code",
     "labels": {    
         "name": "Name",
-        "type": "Type",
-        "details": "Details",
+        "type": "Type",       
         "title": "Title",
         "category": "Category",
         "handler": "Handler",
